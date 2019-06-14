@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"os"
 )
@@ -28,6 +29,24 @@ func main() {
 		log.Fatalf("can't share %q: %v", *dir, err)
 	}
 
-	log.Printf("Serving from: %s\nListening on: http://localhost:%d", *dir, *port)
+	addr := localAddr()
+	log.Printf("Serving from: %s\nListening on: %s:%d", *dir, addr, *port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *port), http.FileServer(http.Dir(*dir))))
+}
+
+func localAddr() string {
+	addrs, err := net.InterfaceAddrs()
+	if err != nil {
+		return ""
+	}
+
+	for _, address := range addrs {
+		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+			if ipnet.IP.To4() != nil {
+				return ipnet.IP.String()
+			}
+		}
+	}
+
+	return "localhost"
 }
