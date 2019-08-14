@@ -29,6 +29,7 @@ func main() {
 		log.Fatalf("can't share %q: %v", *dir, err)
 	}
 
+	// Doing this for users sharing on a local network.
 	addr := localAddr()
 	log.Printf("Serving from: %s\nListening on: %s:%d", *dir, addr, *port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *port), http.FileServer(http.Dir(*dir))))
