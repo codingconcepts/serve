@@ -9,12 +9,22 @@ import (
 	"os"
 )
 
+var (
+	version string
+)
+
 func main() {
 	log.SetFlags(0)
 
 	dir := flag.String("d", "", "relative or absolute path of directory to serve")
 	port := flag.Int("p", 8080, "service port")
+	versionFlag := flag.Bool("version", false, "display the current version number")
 	flag.Parse()
+
+	if *versionFlag {
+		fmt.Println(version)
+		return
+	}
 
 	if *dir == "" || *port == 0 {
 		flag.Usage()

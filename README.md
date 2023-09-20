@@ -1,13 +1,17 @@
 # serve
 An almost offensively simple file server.
 
-## Installation
+### Installation
+
+Find the release that matches your architecture on the [releases](https://github.com/codingconcepts/serve/releases) page.
+
+Download the tar, extract the executable, and move it into your PATH:
 
 ```
-$ go get -u github.com/codingconcepts/serve
+$ tar -xvf serve_[VERSION]_macos.tar.gz
 ```
 
-## Usage
+### Usage
 ```
 $ serve -h
 Usage of serve:
